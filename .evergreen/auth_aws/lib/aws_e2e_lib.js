@@ -1,18 +1,18 @@
 
-function readSetupJson(file="aws_e2e_setup.json") {
+function readSetupJson() {
     let result;
     try {
-        result = cat(file);
+        result = cat("aws_e2e_setup.json");
     } catch (e) {
         jsTestLog(
-            `Failed to parse file ${file}`);
+            "Failed to parse read aws_e2e_setup.json. See evergreen.yml for how to generate this file which contains evergreen secrets.");
         throw e;
     }
 
     try {
         return JSON.parse(result);
     } catch (e) {
-        jsTestLog(`Failed to parse file ${file}`);
+        jsTestLog("Failed to parse: aws_e2e_setup.json");
         throw e;
     }
 }
