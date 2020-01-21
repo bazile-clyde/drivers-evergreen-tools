@@ -23,8 +23,8 @@ assert(admin.auth("admin", "pwd"));
 
 assert.commandWorked(external.runCommand({createUser: AWS_ACCOUNT_ARN, roles: []}));
 
-const uri = "--host"`mongodb://localhost:${conn.port}/?authMechanism=MONGODB-IAM`;
-const program = `${process.env.PROJECT_DIRECTORY}/.evergreen/run-aws-auth-test.sh`;
+const uri = `mongodb://localhost:${conn.port}/?authMechanism=MONGODB-IAM`;
+const program = `/root/src/.evergreen/aws_hosted_test.sh`;
 
 // Try the command line
 const smoke = runMongoProgram(program, uri);
