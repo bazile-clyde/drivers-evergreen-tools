@@ -1,7 +1,7 @@
 /**
  * Validate that MONGODB-IAM auth works from ECS temporary credentials.
  */
-load('${DRIVERS_TOOLS}/.evergreen/auth_aws/lib/aws_e2e_lib.js');
+load(`${drivers_tools}/.evergreen/auth_aws/lib/aws_e2e_lib.js`);
 
 (function() {
    'use strict';
