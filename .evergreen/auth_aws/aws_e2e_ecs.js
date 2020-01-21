@@ -33,13 +33,14 @@ load('lib/aws_e2e_lib.js');
    }
 
    const config = readSetupJson();
+   const env_vars = readSetupJson("env_vars.json")
 
    const lib_dir = 'lib';
    const container_tester = `${lib_dir}/container_tester.py`;
    const base_command = getPython3Binary() + ` -u  ${container_tester}`;
 
-   const mongo_binaries = process.env.MONGODB_BINARIES;
-   const project_dir = process.env.PROJECT_DIRECTORY;
+   const mongo_binaries = env_vars["mongo_binaries"];
+   const project_dir = env_vars["project_dir"];
 
    const run_prune_command = base_command + ' -v remote_gc_services ' +
        ' --cluster ' + config['iam_auth_ecs_cluster'];
