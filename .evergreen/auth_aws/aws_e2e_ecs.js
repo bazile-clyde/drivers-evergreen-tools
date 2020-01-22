@@ -49,7 +49,7 @@ load(`${drivers_tools}/.evergreen/auth_aws/lib/aws_e2e_lib.js`);
        config['iam_auth_ecs_security_group'] +
        ` --files ${mongo_binaries}/mongod:/root/mongod ${mongo_binaries}/mongo:/root/mongo ` +
        ` ${lib_dir}/ecs_hosted_test.js:/root/ecs_hosted_test.js ` +
-       `${project_dir}:/root/src` +
+       `${project_dir}:/root` +
        ` --script ${lib_dir}/ecs_hosted_test.sh`;
 
    // Pass in the AWS credentials as environment variables

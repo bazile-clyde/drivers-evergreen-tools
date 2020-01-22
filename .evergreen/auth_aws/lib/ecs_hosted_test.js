@@ -31,6 +31,10 @@ runMongoProgram("mongo",
     "--nodb",
     "--eval",
     "listFiles()");
+    runMongoProgram("mongo",
+        "--nodb",
+        "--eval",
+        "listFiles(\".src\");
 const smoke = runMongoProgram(program, uri);
 assert.eq(smoke, 0, "Could not auth with smoke user");
 
