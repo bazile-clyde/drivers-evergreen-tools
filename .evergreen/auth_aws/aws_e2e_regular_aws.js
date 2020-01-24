@@ -2,7 +2,7 @@
  * Validate that the server supports real credentials from AWS and can talk to a real AWS STS
  * service
  */
-load(`${drivers_tools}/.evergreen/auth_aws/lib/aws_e2e_lib.js`);
+load("lib/aws_e2e_lib.js");
 
 (function() {
 "use strict";
