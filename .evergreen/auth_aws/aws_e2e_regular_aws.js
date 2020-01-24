@@ -7,15 +7,8 @@ load("lib/aws_e2e_lib.js");
 (function() {
 "use strict";
 
-const conn = MongoRunner.runMongod({
-    setParameter: {
-        "authenticationMechanisms": "MONGODB-IAM,SCRAM-SHA-256",
-    },
-    auth: "",
-});
-
-const external = conn.getDB("$external");
-const admin = conn.getDB("admin");
+const external = Mongo.getDB("$external");
+const admin = Mongo.getDB("admin");
 assert.commandWorked(admin.runCommand({createUser: "admin", pwd: "pwd", roles: ['root']}));
 assert(admin.auth("admin", "pwd"));
 
@@ -29,6 +22,4 @@ assert(external.auth({
     pwd: config["iam_auth_ecs_secret_access_key"],
     mechanism: 'MONGODB-IAM'
 }));
-
-MongoRunner.stopMongod(conn);
 }());
