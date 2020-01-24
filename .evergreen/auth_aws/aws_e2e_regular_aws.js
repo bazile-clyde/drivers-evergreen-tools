@@ -7,15 +7,18 @@ load("lib/aws_e2e_lib.js");
 (function() {
 "use strict";
 
-const external = Mongo.getDB("$external");
-const admin = Mongo.getDB("admin");
+const external = new Mongo().getDB("$external");
+const admin = new Mongo().getDB("admin");
+
 assert.commandWorked(admin.runCommand({createUser: "admin", pwd: "pwd", roles: ['root']}));
 assert(admin.auth("admin", "pwd"));
 
 const config = readSetupJson();
 
 assert.commandWorked(
-    external.runCommand({createUser: config["iam_auth_ecs_account_arn"], roles: []}));
+    external.runCommand({createUser: 'arn:aws:iam::123456789012:user/Alice', roles: []}));
+// assert.commandWorked(
+//     external.runCommand({createUser: config["iam_auth_ecs_account_arn"], roles: []}));
 
 assert(external.auth({
     user: config["iam_auth_ecs_account"],
