@@ -16,9 +16,7 @@ assert(admin.auth("admin", "pwd"));
 const config = readSetupJson();
 
 assert.commandWorked(
-    external.runCommand({createUser: 'arn:aws:iam::123456789012:user/Alice', roles: []}));
-// assert.commandWorked(
-//     external.runCommand({createUser: config["iam_auth_ecs_account_arn"], roles: []}));
+    external.runCommand({createUser: config["iam_auth_ecs_account_arn"], roles: []}));
 
 assert(external.auth({
     user: config["iam_auth_ecs_account"],
