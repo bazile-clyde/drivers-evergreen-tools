@@ -22,7 +22,7 @@ assert(admin.auth("admin", "pwd"));
 const config = readSetupJson();
 
 assert.commandWorked(
-    external.runCommand({createUser: config["iam_auth_ecs_account_arn"], roles: ['read']}));
+    external.runCommand({createUser: config["iam_auth_ecs_account_arn"], roles: ['root']}));
 
 assert(external.auth({
     user: config["iam_auth_ecs_account"],
