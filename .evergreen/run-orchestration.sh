@@ -35,7 +35,7 @@ if [ "$AUTH" = "auth" ]; then
 fi
 
 if [ "$AWS" = "aws" ]; then
-  ORCHESTRATION_FILE="${ORCHESTRATION_FILE}-auth"
+  ORCHESTRATION_FILE="${ORCHESTRATION_FILE}-aws"
 fi
 
 if [ "$SSL" != "nossl" ]; then
