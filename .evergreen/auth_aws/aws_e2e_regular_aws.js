@@ -9,7 +9,9 @@ load("lib/aws_e2e_lib.js");
 
 const external = new Mongo().getDB("$external");
 const admin = new Mongo().getDB("admin");
-assert(admin.auth("bob", "pwd123"));
+
+assert.commandWorked(admin.runCommand({createUser: "admin", pwd: "pwd", roles: ['root']}));
+assert(admin.auth("admin", "pwd"));
 
 const config = readSetupJson();
 
