@@ -38,10 +38,6 @@ const credentials = getAssumeCredentials();
 const admin = Mongo().getDB("admin");
 const external = admin.getMongo().getDB("$external");
 
-print("AccessKeyId={" + credentials["AccessKeyId"] + "}")
-print("SecretAccessKey={" + credentials["SecretAccessKey"] + "}")
-print("SessionToken={" + credentials["SessionToken"] + "}")
-
 assert(admin.auth("bob", "pwd123"));
 assert.commandWorked(external.runCommand({createUser: ASSUMED_ROLE, roles:[{role: 'read', db: "aws"}]}));
 assert(external.auth({
