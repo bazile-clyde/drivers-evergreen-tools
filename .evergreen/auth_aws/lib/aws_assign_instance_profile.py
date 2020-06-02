@@ -6,7 +6,10 @@ Script for assign an instance policy to the current machine.
 import argparse
 import urllib.request
 import logging
+import os
+import sys
 import time
+from typing import List
 
 import boto3
 import botocore
@@ -17,18 +20,32 @@ def _get_local_instance_id():
     return urllib.request.urlopen('http://169.254.169.254/latest/meta-data/instance-id').read().decode()
 
 def _has_instance_profile():
+    base_url = "http://169.254.169.254/latest/meta-data/iam/security-credentials/"
     try:
-        req = urllib.request.urlopen("http://169.254.169.254/latest/meta-data/iam/security-credentials/")
+        print("Reading: " + base_url)
+        iam_role = urllib.request.urlopen(base_url).read().decode()
     except urllib.error.HTTPError as e:
+        print(e)
         if e.code == 404:
             return False
         raise e
+
+    try:
+        url = base_url + iam_role
+        print("Reading: " + url)
+        req = urllib.request.urlopen(url)
+    except urllib.error.HTTPError as e:
+        print(e)
+        if e.code == 404:
+            return False
+        raise e
+
     return True
 
 def _wait_instance_profile():
     retry = 60
     while not _has_instance_profile() and retry:
-        time.sleep(1)
+        time.sleep(5)
         retry -= 1
 
     if retry == 0:
@@ -42,7 +59,7 @@ def _assign_instance_policy(iam_instance_arn):
 
     instance_id = _get_local_instance_id()
 
-    ec2_client = boto3.client("ec2", 'us-east-1')
+    ec2_client = boto3.client("ec2")
 
     #https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2.html#EC2.Client.associate_iam_instance_profile
     try:
