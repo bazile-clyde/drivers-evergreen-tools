@@ -6,10 +6,8 @@ Script for assign an instance policy to the current machine.
 import argparse
 import urllib.request
 import logging
-import os
 import sys
 import time
-from typing import List
 
 import boto3
 import botocore
@@ -59,7 +57,7 @@ def _assign_instance_policy(iam_instance_arn):
 
     instance_id = _get_local_instance_id()
 
-    ec2_client = boto3.client("ec2")
+    ec2_client = boto3.client("ec2", 'us-east-1')
 
     #https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2.html#EC2.Client.associate_iam_instance_profile
     try:
